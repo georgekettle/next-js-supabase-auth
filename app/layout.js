@@ -7,7 +7,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 import Navbar from '@/components/Navbar'
-import SupabaseProvider from './SupabaseProvider'
+import SupabaseProvider from './supabase-provider'
 
 export const metadata = {
   title: 'Chatterbot',

@@ -13,7 +13,7 @@ function BotCard({bot}) {
   return(
     <div
         key={bot.id}
-        className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
+        className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-1 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
       >
         <div className="flex-shrink-0">
           <Image className="h-10 w-10 rounded-full" src={imageUrl} alt={bot.name} height={100} width={100}/>
@@ -21,7 +21,7 @@ function BotCard({bot}) {
         <div className="min-w-0 flex-1">
           <Link href={`/bots/${bot.id}`} className="focus:outline-none">
             <span className="absolute inset-0" aria-hidden="true" />
-            <p className="text-sm font-medium text-gray-900">{bot.name}</p>
+            <p className="text-sm font-normal text-gray-900">{bot.name}</p>
             <p className="truncate text-sm text-gray-500 line-clamp-2">{bot.description}</p>
           </Link>
         </div>
@@ -56,7 +56,7 @@ export default async function Home() {
       <div className="py-24">
         <Container>
           <div className="pb-8">
-            <h3 className="text-base font-semibold leading-6 text-gray-900">Chatbots</h3>
+            <h3 className="text-base font-normal leading-6 text-gray-900">Chatbots</h3>
             <p className="mt-2 max-w-4xl text-sm text-gray-500">
               Find the right chatbot for your business. Etiam ullamcorper massa viverra consequat, consectetur id nulla tempus.
             </p>
