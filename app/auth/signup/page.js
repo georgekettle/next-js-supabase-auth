@@ -19,7 +19,7 @@ export default function SignUp() {
             return;
         }
         // redirect to home page
-        router.redirect("/");
+        router.push("/");
     };
 
     return (

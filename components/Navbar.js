@@ -6,6 +6,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Container from './Container';
 
 function classNames(...classes) {
@@ -14,6 +15,13 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { supabase, session } = useSupabase();
+  const router = useRouter();
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    // redirect to home page
+    router.push('/');
+  }
 
   // Separate the logic and conditionally render different JSX elements
   const renderAuthenticatedContent = () => (
@@ -52,41 +60,15 @@ export default function Navbar() {
             <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-sm bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <Menu.Item>
                 {({ active }) => (
-                  <Link
-                    href="#"
+                  <button
+                    onClick={() => supabase.auth.signOut()}
                     className={classNames(
                       active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700'
-                    )}
-                  >
-                    Your Profile
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700'
-                    )}
-                  >
-                    Settings
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100' : '',
-                      'block px-4 py-2 text-sm text-gray-700'
+                      'block px-4 py-2 text-sm text-gray-700 w-full text-left'
                     )}
                   >
                     Sign out
-                  </Link>
+                  </button>
                 )}
               </Menu.Item>
             </Menu.Items>
@@ -119,25 +101,27 @@ export default function Navbar() {
         <div className="flex h-16 justify-between">
           <div className="flex">
             <div className="flex flex-shrink-0 items-center">
-              <Image
-                className="block h-4 w-auto lg:hidden"
-                src="/logo_sm.svg"
-                width={100}
-                height={100}
-                alt="Your Company"
-              />
-              <Image
-                className="hidden h-4 w-auto lg:block"
-                src="/logo.svg"
-                width={100}
-                height={100}
-                alt="Your Company"
-              />
+              <Link href="/">
+                <Image
+                  className="block h-4 w-auto lg:hidden"
+                  src="/logo_sm.svg"
+                  width={100}
+                  height={100}
+                  alt="Your Company"
+                />
+                <Image
+                  className="hidden h-4 w-auto lg:block"
+                  src="/logo.svg"
+                  width={100}
+                  height={100}
+                  alt="Your Company"
+                />
+              </Link>
             </div>
             <div className="hidden md:ml-6 md:flex md:space-x-8">
               {/* Current: "border-gray-900 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
               <Link
-                href="/chatbots/new"
+                href="/"
                 className="inline-flex items-center border-b border-gray-900 px-1 pt-1 text-sm font-normal text-gray-900"
               >
                 Find a Chatbot
