@@ -7,7 +7,6 @@ import { useSupabase } from "@/app/supabase-provider";
 import Form from '@/components/forms/Form';
 import Input from '@/components/forms/Input';
 import SubmitButton from '@/components/forms/SubmitButton';
-import Label from '@/components/forms/Label';
 import LinkUnderline from '@/components/links/LinkUnderline';
 
 
