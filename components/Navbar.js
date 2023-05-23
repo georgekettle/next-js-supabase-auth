@@ -1,194 +1,150 @@
 'use client'
 
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { PlusIcon } from '@heroicons/react/20/solid'
-import Link from 'next/link'
-import Image from 'next/image'
-import Container from './Container'
+import { useSupabase } from '@/app/supabase-provider';
+import { Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
+import Container from './Container';
+import LinkPrimary from './links/LinkPrimary';
+import LinkSecondary from './links/LinkSecondary';
+import toast from 'react-hot-toast';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
+}
+
+// Hash of the routes and their names
+const routes = {
+  '/': 'Find a Chatbot',
 }
 
 export default function Navbar() {
-  return (
-    <Disclosure as="nav" className="bg-white shadow">
-      {({ open }) => (
-        <>
-          <Container>
-            <div className="flex h-16 justify-between">
-              <div className="flex">
-                <div className="-ml-2 mr-2 flex items-center md:hidden">
-                  {/* Mobile menu button */}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-sm p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-900">
-                    <span className="sr-only">Open main menu</span>
-                    {open ? (
-                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Disclosure.Button>
-                </div>
-                <div className="flex flex-shrink-0 items-center">
-                  <Image
-                    className="block h-5 w-auto lg:hidden"
-                    src="/logo_sm.svg"
-                    width={100}
-                    height={100}
-                    alt="Your Company"
-                  />
-                  <Image
-                    className="hidden h-5 w-auto lg:block"
-                    src="/logo.svg"
-                    width={100}
-                    height={100}
-                    alt="Your Company"
-                  />
-                </div>
-                <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {/* Current: "border-gray-900 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                  <Link
-                    href="/chatbots/new"
-                    className="inline-flex items-center border-b border-gray-900 px-1 pt-1 text-sm font-normal text-gray-900"
-                  >
-                    Find a Chatbot
-                  </Link>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Link
-                    href="/chatbots/new"
-                    className="relative inline-flex items-center gap-x-1.5 rounded-sm bg-gray-900 px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-                  >
-                    <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                    New Chatbot
-                    </Link>
-                </div>
-                <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
-                  {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
-                    <div>
-                      <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                        <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-sm bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
-                              )}
-                            >
-                              Your Profile
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
-                              )}
-                            >
-                              Settings
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              href="#"
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
-                              )}
-                            >
-                              Sign out
-                            </Link>
-                          )}
-                        </Menu.Item>
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
-              </div>
-            </div>
-          </Container>
+  const { supabase, session } = useSupabase();
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  async function signOut() {
+    const toastId = toast.loading('Signing out...')
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      toast.error('Something went wrong', { id: toastId })
+      return
+    }
+    toast.success('Signed out successfully', { id: toastId })
+    
+    // redirect to home page
+    router.push('/');
+  }
 
-          <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 pb-3 pt-2">
-              {/* Current: "bg-gray-900border-gray-900 text-gray-900", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-gray-900 bg-gray-900py-2 pl-3 pr-4 text-base font-normal text-gray-900 sm:pl-5 sm:pr-6"
-              >
-                Find a Chatbot
-              </Disclosure.Button>
+  // Separate the logic and conditionally render different JSX elements
+  const renderAuthenticatedContent = () => (
+    <div className="flex items-center">
+      <div className="flex-shrink-0">
+        <LinkPrimary href="/chatbots/new">
+          <PlusIcon className="-ml-0.5 h-5 w-5 mr-1" aria-hidden="true" />
+          New Chatbot
+        </LinkPrimary>
+      </div>
+      <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
+        {/* Profile dropdown */}
+        <Menu as="div" className="relative ml-3">
+          <div>
+            <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
+              <span className="sr-only">Open user menu</span>
+              <img
+                className="h-8 w-8 rounded-full"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={signOut}
+                    className={classNames(
+                      active ? 'bg-gray-100' : '',
+                      'block px-4 py-2 text-sm text-gray-700 w-full text-left'
+                    )}
+                  >
+                    Sign out
+                  </button>
+                )}
+              </Menu.Item>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+    </div>
+  );
+
+  const renderGuestContent = () => (
+    <div className="flex items-center space-x-2">
+      <LinkSecondary href="/auth/login">Log In</LinkSecondary>
+      <LinkPrimary href="/auth/signup">Sign Up</LinkPrimary>
+    </div>
+  );
+
+  return (
+    <div className="relative bg-white border-b border-gray-300">
+      <Container>
+        <div className="flex h-16 justify-between">
+          <div className="flex">
+            <div className="flex flex-shrink-0 items-center">
+              <Link href="/">
+                <Image
+                  className="block h-4 w-auto lg:hidden"
+                  src="/logo_sm.svg"
+                  width={100}
+                  height={100}
+                  alt="Your Company"
+                />
+                <Image
+                  className="hidden h-4 w-auto lg:block"
+                  src="/logo.svg"
+                  width={100}
+                  height={100}
+                  alt="Your Company"
+                />
+              </Link>
             </div>
-            <div className="border-t border-gray-200 pb-3 pt-4">
-              <div className="flex items-center px-4 sm:px-6">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="ml-3">
-                  <div className="text-base font-normal text-gray-800">Tom Cook</div>
-                  <div className="text-sm font-normal text-gray-500">tom@example.com</div>
-                </div>
-              </div>
-              <div className="mt-3 space-y-1">
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-normal text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
+              {/* Loop through routes and show current classes or default depending on whether the current page is the route */}
+              {/* Current: "border-gray-900 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+              {Object.entries(routes).map(([path, name]) => (
+                <Link
+                  href={path}
+                  key={path}
+                  className={classNames(
+                    pathname === path
+                      ? 'border-b border-gray-900 text-gray-900'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                    'inline-flex items-center px-1 pt-1 text-sm font-normal'
+                  )}
                 >
-                  Your Profile
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-normal text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
-                >
-                  Settings
-                </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-normal text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
-                >
-                  Sign out
-                </Disclosure.Button>
-              </div>
+                  {name}
+                </Link>
+              ))}
             </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
-  )
+          </div>
+
+          {/* Conditionally render authenticated or guest content */}
+          {session ? renderAuthenticatedContent() : renderGuestContent()}
+        </div>
+      </Container>
+    </div>
+  );
 }
