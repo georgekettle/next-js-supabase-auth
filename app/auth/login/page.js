@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { useSupabase } from "@/app/supabase-provider";
 
-import Link from 'next/link'
 import Form from '@/components/forms/Form'
 import Input from '@/components/forms/Input'
 import Label from '@/components/forms/Label'
@@ -76,9 +75,9 @@ export default function Login() {
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
-              <Link href="/auth/signup" className="font-normal text-gray-900 hover:text-gray-900 underline">
+              <LinkUnderline href="/auth/signup" className="font-normal text-gray-900 hover:text-gray-900 underline">
                 Sign up now
-                </Link>
+              </LinkUnderline>
             </p>
           </div>
         </div>
