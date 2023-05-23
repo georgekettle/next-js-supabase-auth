@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Container from './Container';
 import LinkPrimary from './links/LinkPrimary';
 import LinkSecondary from './links/LinkSecondary';
@@ -15,9 +15,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+// Hash of the routes and their names
+const routes = {
+  '/': 'Find a Chatbot',
+}
+
 export default function Navbar() {
   const { supabase, session } = useSupabase();
   const router = useRouter();
+  const pathname = usePathname();
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -60,7 +66,7 @@ export default function Navbar() {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    onClick={() => supabase.auth.signOut()}
+                    onClick={signOut}
                     className={classNames(
                       active ? 'bg-gray-100' : '',
                       'block px-4 py-2 text-sm text-gray-700 w-full text-left'
@@ -108,13 +114,22 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="hidden md:ml-6 md:flex md:space-x-8">
+              {/* Loop through routes and show current classes or default depending on whether the current page is the route */}
               {/* Current: "border-gray-900 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-              <Link
-                href="/"
-                className="inline-flex items-center border-b border-gray-900 px-1 pt-1 text-sm font-normal text-gray-900"
-              >
-                Find a Chatbot
-              </Link>
+              {Object.entries(routes).map(([path, name]) => (
+                <Link
+                  href={path}
+                  key={path}
+                  className={classNames(
+                    pathname === path
+                      ? 'border-b border-gray-900 text-gray-900'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
+                    'inline-flex items-center px-1 pt-1 text-sm font-normal'
+                  )}
+                >
+                  {name}
+                </Link>
+              ))}
             </div>
           </div>
 
