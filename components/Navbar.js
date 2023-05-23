@@ -10,6 +10,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import Container from './Container';
 import LinkPrimary from './links/LinkPrimary';
 import LinkSecondary from './links/LinkSecondary';
+import toast from 'react-hot-toast';
+import ToastNotification from './notifications/ToastNotification';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -24,9 +26,13 @@ export default function Navbar() {
   const { supabase, session } = useSupabase();
   const router = useRouter();
   const pathname = usePathname();
-
+  
   async function signOut() {
-    await supabase.auth.signOut();
+    toast.promise(supabase.auth.signOut(), {
+      loading: 'Signing out...',
+      success: 'Signed out successfully',
+      error: 'Something went wrong',
+    })
     // redirect to home page
     router.push('/');
   }

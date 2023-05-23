@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 import Navbar from '@/components/Navbar'
 import SupabaseProvider from './supabase-provider'
+import ToastNotificationContainer from '@/components/notifications/ToastNotificationContainer'
 
 export const metadata = {
   title: 'Chatterbot',
@@ -30,6 +31,7 @@ export default async function RootLayout({ children }) {
         <SupabaseProvider session={session}>
           <Navbar />
           {children}
+          <ToastNotificationContainer />
         </SupabaseProvider>
       </body>
     </html>
