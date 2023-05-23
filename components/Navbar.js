@@ -42,7 +42,7 @@ export default function Navbar() {
     <div className="flex items-center">
       <div className="flex-shrink-0">
         <LinkPrimary href="/chatbots/new">
-          <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
+          <PlusIcon className="-ml-0.5 h-5 w-5 mr-1" aria-hidden="true" />
           New Chatbot
         </LinkPrimary>
       </div>
