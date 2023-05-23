@@ -49,7 +49,7 @@ export default function Login() {
                     <div>
                         <div className="flex items-center justify-between">
                             <Label htmlFor="password">Password</Label>
-                            <LinkUnderline path="/auth/forgotten_password" className="text-sm mb-2">
+                            <LinkUnderline href="/auth/forgotten_password" className="text-sm mb-2">
                                 Forgot password?
                             </LinkUnderline>
                         </div>

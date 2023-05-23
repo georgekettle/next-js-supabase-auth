@@ -35,7 +35,7 @@ export default function Navbar() {
   const renderAuthenticatedContent = () => (
     <div className="flex items-center">
       <div className="flex-shrink-0">
-        <LinkPrimary path="/chatbots/new">
+        <LinkPrimary href="/chatbots/new">
           <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
           New Chatbot
         </LinkPrimary>
@@ -85,8 +85,8 @@ export default function Navbar() {
 
   const renderGuestContent = () => (
     <div className="flex items-center space-x-2">
-      <LinkSecondary path="/auth/login">Log In</LinkSecondary>
-      <LinkPrimary path="/auth/signup">Sign Up</LinkPrimary>
+      <LinkSecondary href="/auth/login">Log In</LinkSecondary>
+      <LinkPrimary href="/auth/signup">Sign Up</LinkPrimary>
     </div>
   );
 

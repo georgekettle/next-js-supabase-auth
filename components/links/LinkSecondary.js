@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function LinkSecondary({ size = 'md', path = '#', children }) {
+export default function LinkSecondary({ size = 'md', href = '#', children }) {
   let buttonSizeClass;
 
   switch (size) {
@@ -25,7 +25,7 @@ export default function LinkSecondary({ size = 'md', path = '#', children }) {
 
   return (
     <>
-      <Link href={path} className={`rounded-md flex items-center justify-center space-x-2 border border-gray-400 bg-white text-gray-900 hover:border-gray-900 transition-all ease-in-out duration-200 ${buttonSizeClass}`}>
+      <Link href={href} className={`rounded-md flex items-center justify-center space-x-2 border border-gray-400 bg-white text-gray-900 hover:border-gray-900 transition-all ease-in-out duration-200 ${buttonSizeClass}`}>
         {children}
       </Link>
     </>

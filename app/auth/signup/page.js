@@ -60,7 +60,7 @@ export default function SignUp() {
     
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Or{' '}
-                    <LinkUnderline path="/auth/login" className="text-sm mb-2">
+                    <LinkUnderline href="/auth/login" className="text-sm mb-2">
                         Log in to your account
                     </LinkUnderline>
                 </p>

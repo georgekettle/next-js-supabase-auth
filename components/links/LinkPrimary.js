@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function BtnPrimary({ size = 'md', path = '#', children }) {
+export default function BtnPrimary({ size = 'md', href = '#', children }) {
     let buttonSizeClass;
   
     switch (size) {
@@ -26,7 +26,7 @@ export default function BtnPrimary({ size = 'md', path = '#', children }) {
     return (
       <>
         {/* Convert button to link */}
-        <Link href={path} className={`rounded-md flex items-center justify-center space-x-2 bg-gray-900 text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-all ease-in-out duration-200 ${buttonSizeClass}`}>
+        <Link href={href} className={`rounded-md inline-flex items-center justify-center space-x-2 bg-gray-900 text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 transition-all ease-in-out duration-200 ${buttonSizeClass}`}>
             {children}
         </Link>
       </>

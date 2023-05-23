@@ -19,7 +19,9 @@ export default function ForgottenPassword() {
 
     const handleSendResetLink = async () => {
         setLoading(true);
-        await supabase.auth.resetPasswordForEmail(user.email);
+        await supabase.auth.resetPasswordForEmail(user.email, {
+            redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/new_password`,
+        });
         setShowConfirmation(true);
     };
 
@@ -58,9 +60,9 @@ export default function ForgottenPassword() {
                     </Form>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
-                        Or{' '}
-                        <LinkUnderline path="/auth/login" className="text-sm mb-2">
-                        Log in to your account
+                        Back to{' '}
+                        <LinkUnderline href="/auth/login" className="text-sm mb-2">
+                        Log in
                         </LinkUnderline>
                     </p>
                     </div>
