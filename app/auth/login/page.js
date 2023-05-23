@@ -10,18 +10,24 @@ import Input from '@/components/forms/Input'
 import Label from '@/components/forms/Label'
 import SubmitButton from '@/components/forms/SubmitButton'
 import LinkUnderline from '@/components/links/LinkUnderline'
+import Errors from '@/components/forms/Errors';
 
 
 export default function Login() {
   const router = useRouter();
     const { supabase } = useSupabase();
     const [user, setUser] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleLogin = async () => {
+        setLoading(true);
         // handle sign up
         const { data, error } = await supabase.auth.signInWithPassword(user)
+        setLoading(false);
         if (error) {
             console.log(error);
+            setError(error.message);
             return;
         }
         // redirect to home page
@@ -37,6 +43,7 @@ export default function Login() {
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <Form onSubmit={handleLogin}>
                 <div className="space-y-5">
+                    {error && <Errors errors={[error]} />}
                     
                     <Input name="email"
                         type="email"
@@ -63,7 +70,7 @@ export default function Login() {
                             value={user.password}
                             onChange={(e) => setUser({ ...user, password: e.target.value })}/>
                     </div>
-                    <SubmitButton text="Log in" />
+                    <SubmitButton text="Log in" loading={loading} />
                 </div>
             </Form>
   

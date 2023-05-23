@@ -6,7 +6,6 @@ import { useSupabase } from "@/app/supabase-provider";
 import Form from '@/components/forms/Form';
 import Input from '@/components/forms/Input';
 import SubmitButton from '@/components/forms/SubmitButton';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import LinkPrimary from '@/components/links/LinkPrimary';
 
 
