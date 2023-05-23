@@ -2,9 +2,15 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation';
-import Link from 'next/link'
-
 import { useSupabase } from "@/app/supabase-provider";
+
+import Link from 'next/link'
+import Form from '@/components/forms/Form'
+import Input from '@/components/forms/Input'
+import Label from '@/components/forms/Label'
+import SubmitButton from '@/components/forms/SubmitButton'
+import LinkUnderline from '@/components/links/LinkUnderline'
+
 
 export default function Login() {
   const router = useRouter();
@@ -29,59 +35,37 @@ export default function Login() {
             Log in to your account
           </h2>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST" onSubmit={handleLogin}>
-              <div>
-                <label htmlFor="email" className="block text-sm font-normal leading-6 text-gray-900">
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    value={user.email}
-                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
-                  />
+            <Form onSubmit={handleLogin}>
+                <div className="space-y-5">
+                    
+                    <Input name="email"
+                        type="email"
+                        label="Email address"
+                        autoComplete="email"
+                        required
+                        value={user.email}
+                        onChange={(e) => setUser({ ...user, email: e.target.value })} />
+                    
+                    <div>
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="password">Password</Label>
+                            <LinkUnderline path="/auth/forgotten_password" className="text-sm mb-2">
+                                Forgot password?
+                            </LinkUnderline>
+                        </div>
+                        <Input
+                            id="password"
+                            label={false}
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            value={user.password}
+                            onChange={(e) => setUser({ ...user, password: e.target.value })}/>
+                    </div>
+                    <SubmitButton text="Log in" />
                 </div>
-              </div>
-  
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-normal leading-6 text-gray-900">
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a href="#" className="font-normal text-gray-900 hover:text-gray-900">
-                      Forgot password?
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    value={user.password}
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-  
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-normal leading-6 text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-                >
-                  Log In
-                </button>
-              </div>
-            </form>
+            </Form>
   
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
