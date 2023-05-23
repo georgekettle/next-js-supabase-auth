@@ -27,11 +27,14 @@ export default function Navbar() {
   const pathname = usePathname();
   
   async function signOut() {
-    toast.promise(supabase.auth.signOut(), {
-      loading: 'Signing out...',
-      success: 'Signed out successfully',
-      error: 'Something went wrong',
-    })
+    const toastId = toast.loading('Signing out...')
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      toast.error('Something went wrong', { id: toastId })
+      return
+    }
+    toast.success('Signed out successfully', { id: toastId })
+    
     // redirect to home page
     router.push('/');
   }
