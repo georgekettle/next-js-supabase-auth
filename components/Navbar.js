@@ -11,7 +11,6 @@ import Container from './Container';
 import LinkPrimary from './links/LinkPrimary';
 import LinkSecondary from './links/LinkSecondary';
 import toast from 'react-hot-toast';
-import ToastNotification from './notifications/ToastNotification';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
