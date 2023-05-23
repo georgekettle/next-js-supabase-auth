@@ -8,6 +8,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Container from './Container';
+import LinkPrimary from './links/LinkPrimary';
+import LinkSecondary from './links/LinkSecondary';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -27,13 +29,10 @@ export default function Navbar() {
   const renderAuthenticatedContent = () => (
     <div className="flex items-center">
       <div className="flex-shrink-0">
-        <Link
-          href="/chatbots/new"
-          className="relative inline-flex items-center gap-x-1.5 rounded-sm bg-gray-900 px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-        >
+        <LinkPrimary path="/chatbots/new">
           <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
           New Chatbot
-        </Link>
+        </LinkPrimary>
       </div>
       <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
         {/* Profile dropdown */}
@@ -79,19 +78,9 @@ export default function Navbar() {
   );
 
   const renderGuestContent = () => (
-    <div className="flex items-center">
-      <Link
-        href="/auth/login"
-        className="relative inline-flex items-center gap-x-1.5 rounded-sm bg-gray-900 px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-      >
-        Log In
-      </Link>
-      <Link
-        href="/auth/signup"
-        className="relative inline-flex items-center gap-x-1.5 rounded-sm bg-gray-900 px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-      >
-        Sign Up
-      </Link>
+    <div className="flex items-center space-x-2">
+      <LinkSecondary path="/auth/login">Log In</LinkSecondary>
+      <LinkPrimary path="/auth/signup">Sign Up</LinkPrimary>
     </div>
   );
 
