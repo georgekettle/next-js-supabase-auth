@@ -36,8 +36,6 @@ export default async function Home() {
     .from('bots')
     .select('*')
 
-  console.log(bots)
-
   return (
     <main>
       {/* Hero */}
