@@ -15,9 +15,9 @@ export default function UploadForm({ session }) {
         // get the file from the input
         const file = document.getElementById('file-upload').files[0]
         // upload the file to supabase
-        const { error } = await supabase.storage
+        const { data: uploadedFile, error } = await supabase.storage
             .from('files')
-            .upload(`${file.name}`, file)
+            .upload(`${user.id}/${file.name}`, file)
             
         // if there was an error, show it to the user
         if (error) {
@@ -26,6 +26,13 @@ export default function UploadForm({ session }) {
             throw error
         }
 
+        // otherwise, show a success message
+        toast.success('File uploaded!', { id: toastId })
+        console.log(uploadedFile)
+        // file looks like: { path: 'user-id/file-name.png' }
+
+        // create a fileitem in the database (saving the path above)
+        // redirect to the file page
     }
 
 
